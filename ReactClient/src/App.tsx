@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { notes } from './helpers';
 import Piano from './Piano';
 
 function App() {
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    console.log(e.currentTarget.value)
+  }
+
   return( 
     <div>
         <Piano notes={notes} />

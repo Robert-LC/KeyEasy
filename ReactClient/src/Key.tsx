@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import styled from 'styled-components';
 
 
 type Props = {
     note: string;
-    color: string; 
+    color: string;
 }
 
-const Key: React.FC<Props> = ({ note, color }) => 
-    color === 'white' ? <WhiteKey value={note} /> : <BlackKey value={note} />;
+const Key: React.FC<Props> = ({ note, color }) => (
+    color === 'white' ? <WhiteKey value={note} onClick={onKeyClick} /> 
+        : <BlackKey value={note} onClick={onKeyClick}/>
+);
+
+
+const onKeyClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const audio = new Audio(`sounds/piano_${e.currentTarget.value}.mp3`);
+    audio.volume = 0.05;
+    audio.play();
+};
 
 
 //Styled Components

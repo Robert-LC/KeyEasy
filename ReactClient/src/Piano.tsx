@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { NoteType } from './helpers';
 import Key from './Key';
@@ -14,8 +14,7 @@ const Piano: React.FC<Props> = ({ notes }) => (
             <Key
                 key={element.note}
                 note={element.note}
-                color={element.color}
-                
+                color={element.color} 
             />
         ))}
     </div>
