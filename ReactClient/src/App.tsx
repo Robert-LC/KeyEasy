@@ -1,6 +1,7 @@
 import React, { MouseEvent } from 'react';
 import { notes } from './helpers';
 import Piano from './Piano';
+import './App.css';
 
 function App() {
 

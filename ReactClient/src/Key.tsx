@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 
 
@@ -38,12 +38,12 @@ const WhiteKey = styled.button`
     width: 120px;
     height: 400px;
     margin: 1px;
-    background: white;
+    background: #ededed;
     border: 1px solid black;
     box-shadow: 2px 5px;
 
     :active {
-        background: #eee;
+        background: #ccc;
     }
 `
 
