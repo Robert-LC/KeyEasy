@@ -1,6 +1,6 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
-import { NoteType } from './helpers';
+import { NoteType } from '../helpers';
 import Key from './Key';
 
 type Props = {
@@ -26,6 +26,5 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
 `
 export default Piano;

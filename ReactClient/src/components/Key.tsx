@@ -1,7 +1,6 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 
-
 type Props = {
     note: string;
     color: string;
@@ -46,7 +45,6 @@ const WhiteKey = styled.button`
         background: #ccc;
     }
 `
-
 
 export default Key;
 
