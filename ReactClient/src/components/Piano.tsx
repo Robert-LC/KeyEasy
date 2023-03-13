@@ -7,6 +7,10 @@ type Props = {
     notes: NoteType[]
 }
 
+/**
+ * Piano component generates all Key's in an octave (12 notes/keys)
+ * @returns One octave of a working clickable piano.
+ */
 const Piano: React.FC<Props> = ({ notes }) => (
     <Wrapper>
         <div>

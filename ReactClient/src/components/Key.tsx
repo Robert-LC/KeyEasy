@@ -12,6 +12,11 @@ const Key: React.FC<Props> = ({ note, color }) => (
 );
 
 
+/**
+ * When a key is clicked this method is called to run other methods
+ * that need to happen on click.
+ * @param e Mouse Click Event
+ */
 const onKeyClick = (e: MouseEvent<HTMLButtonElement>) => {
     const audio = new Audio(`sounds/piano_${e.currentTarget.value}.mp3`);
     audio.volume = 0.05;

@@ -1,0 +1,13 @@
+[
+    {
+        "name": "C Major",
+        "type": "Major",
+        "notes": ["C", "D", "E", "F", "G", "A", "B"]
+    },
+    {
+        "name": "A Minor",
+        "type": "Minor",
+        "notes": ["A", "B", "C", "D", "E", "F", "G"]
+    }
+
+]
