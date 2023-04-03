@@ -1,27 +1,13 @@
-import react from 'react';
-
-//File name: GameService.ts
-//Description: GameService has numerous methods to handle game functionality
-//             such as checking correctness, updating score, etc.
-
-
-
 /**
- * Checks if the note the user guessed is the next note in the scale.
- * @returns True if the user correctly guessed the next note, else false
+ * Class Responsible for Game logic
+ * such as Initializing the game, handling score, etc.
  */
-const isGuessCorrect = (note: string): boolean => {
-    return true;
-}
+class GameService {
 
-const updateScore = (): void => {
-    //increment the score of the game
-}
+    private initGame() {
 
-const startGame = (): void  => {
+    }
 
 }
 
-const endGame = (): void => {
-    
-}
+export default GameService
