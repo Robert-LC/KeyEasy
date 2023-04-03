@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/babel__traverse": "^7.0.6",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.30",
     "@types/react": "^16.14.35",
@@ -14,7 +15,7 @@
     "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^5.0.1",
     "styled-components": "^5.3.8",
     "tonal": "^4.14.0",
     "typescript": "^3.8.3"
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/traverse": "^7.21.4",
     "@types/lodash": "^4.14.191"
   }
 }
