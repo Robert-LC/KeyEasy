@@ -21,7 +21,7 @@ class ScaleService {
         notes.forEach((note: string) => {
             
             //use tonalJS to get scale Data for each note name
-            const scale = Scale.get(`${note} ${scaleType}`);
+            var scale = Scale.get(`${note} ${scaleType.toString()}`);
 
             //use data to create ScaleModels
             const model = new ScaleModel(scale.name, scale.notes);

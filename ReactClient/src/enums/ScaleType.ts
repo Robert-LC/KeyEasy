@@ -1,8 +1,7 @@
 
 enum ScaleType {
-    Major,
-    Minor,
-    All
+    Major = "major",
+    Minor = "minor"
 }
 
 export default ScaleType;

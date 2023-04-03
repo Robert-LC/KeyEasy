@@ -4,10 +4,20 @@
  */
 class GameService {
 
+    constructor() {
+        
+    }
+
     private initGame() {
 
     }
 
+    private updateScore() {
+
+    }
+
+
+
 }
 
-export default GameService
+export default GameService;

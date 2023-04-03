@@ -1,7 +1,25 @@
-.scale-text {
-    font-size: 70px;
+.info-div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.note-prompt {
+    font-size: 60px;
     font-family: sans-serif;
     display: flex;
     justify-content: center;
+    color: white;
+}
+
+.highlight-text {
+    color: orange;
+    display: contents;
+}
+
+.scale-text {
+    font-size: 40px;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: flex-start;
     color: white;
 }

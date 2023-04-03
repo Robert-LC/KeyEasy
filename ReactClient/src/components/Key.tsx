@@ -1,6 +1,8 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 
+import KeyService from "../services/KeyService";
+
 type Props = {
     note: string;
     color: string;

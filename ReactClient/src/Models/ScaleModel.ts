@@ -1,11 +1,11 @@
 
 class ScaleModel {
-    name: string;
-    notes: string[];
+    Name: string;
+    Notes: string[];
 
     constructor(name: string, notes: string[]) {
-      this.name = name;
-      this.notes = notes; 
+      this.Name = name;
+      this.Notes = notes; 
     }
 
 
