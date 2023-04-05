@@ -527,3 +527,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/ReactClient/tests-examples/demo-todo-app.spec.ts
+/ReactClient/e2e/example.spec.ts
