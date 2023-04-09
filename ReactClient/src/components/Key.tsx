@@ -1,29 +1,18 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-import KeyService from "../services/KeyService";
 
 type Props = {
     note: string;
     color: string;
+    onKeyClick: (note: string) => void;
 }
 
-const Key: React.FC<Props> = ({ note, color }) => (
-    color === 'white' ? <WhiteKey value={note} onClick={onKeyClick} /> 
-        : <BlackKey value={note} onClick={onKeyClick}/>
+const Key: React.FC<Props> = ({ note, color, onKeyClick }) => (
+
+    color === 'white' 
+        ? <WhiteKey value={note} onClick={() => onKeyClick(note)} /> 
+        : <BlackKey value={note} onClick={() => onKeyClick(note)}/>
 );
-
-
-/**
- * When a key is clicked this method is called to run other methods
- * that need to happen on click.
- * @param e Mouse Click Event
- */
-const onKeyClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const audio = new Audio(`sounds/piano_${e.currentTarget.value}.mp3`);
-    audio.volume = 0.05;
-    audio.play();
-};
 
 
 //Styled Components
@@ -39,7 +28,6 @@ const BlackKey = styled.button`
         background: #333;
     }
 `
-
 const WhiteKey = styled.button`
     width: 120px;
     height: 400px;
@@ -52,8 +40,4 @@ const WhiteKey = styled.button`
         background: #ccc;
     }
 `
-
 export default Key;
-
-
-

@@ -1,22 +1,9 @@
+import GameModel from "../Models/GameModel";
 /**
- * Class Responsible for Game logic
+ * Class responsible for Game logic
  * such as Initializing the game, handling score, etc.
  */
 class GameService {
-
-    constructor() {
-        
-    }
-
-    private initGame() {
-
-    }
-
-    private updateScore() {
-
-    }
-
-
 
 }
 

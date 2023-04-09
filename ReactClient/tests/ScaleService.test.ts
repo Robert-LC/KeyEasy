@@ -33,7 +33,6 @@ test.describe('ScaleService', () => {
     });
 
     test.describe('SelectRandomScale', () => {
-
         test('SelectRandomScale returns a scale', async ({}) => {
             const scaleSvc = new ScaleService();
             expect(scaleSvc.SelectRandomScale()).not.toBe(undefined);

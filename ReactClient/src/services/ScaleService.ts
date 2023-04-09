@@ -2,15 +2,14 @@ import { Scale } from "tonal";
 import ScaleType from "../enums/ScaleType";
 import { sample } from 'lodash';
 import ScaleModel from "../Models/ScaleModel";
+import NoteModel from "../Models/NoteModel";
 
+/**
+ * ScaleService is responsible for handling scale related logic.
+ * It can generate a list of scales, select a random scale, and create a custom list of scales.
+ */
 class ScaleService {
-    private _scales: ScaleModel[] = [];
 
-    constructor(scaleType?: ScaleType) {
-        if(scaleType !== undefined) {
-            this._scales = this.GenerateScales(scaleType);
-        }
-    }
     /**
      * Initialize the list of scales that the ScaleService will manipulate.
      * @param scaleType Major, Minor, or All
@@ -20,40 +19,37 @@ class ScaleService {
         var scalesArray: ScaleModel[] = [];
 
         notes.forEach((note: string) => {
-            
-            //use tonalJS to get scale Data for each note name
+            // Use tonalJS to get scale Data for each note name
             var scale = Scale.get(`${note} ${scaleType.toString()}`);
-
-            //use data to create ScaleModels
-            const model = new ScaleModel(scale.name, scale.notes);
+            
+            // Create NoteModel instances for each note in scale.notes
+            const noteModels: NoteModel[] = scale.notes.map((noteName: string) => new NoteModel(noteName));
+            
+            // Use data to create ScaleModels
+            const model = new ScaleModel(scale.name, noteModels);
             scalesArray.push(model);
         });
-
+          
         return scalesArray;
     }
 
     /**
      * Selected a random scale from the list of scales that were created
      * returns it and removes it from the list so it cant be picked in the future.
-     * @returns The random scale, or undefined if there are no scales left to pick from.
+     * @returns The random scale that was selected
      */
-    public SelectRandomScale(): ScaleModel | undefined {
-        var selectedScale: ScaleModel | undefined;
-
-        selectedScale = sample(this._scales);
-        
-        if(selectedScale !== undefined) {
-            const index: number = this._scales.indexOf(selectedScale);
-            this._scales.splice(index, 1);
+    public SelectRandomScale(scaleList: ScaleModel[]): ScaleModel | undefined  {
+        if (scaleList.length === 0) {
+            return undefined;
         }
-        
+      
+        const selectedScale: ScaleModel = sample(scaleList)!;
+      
+        const index: number = scaleList.indexOf(selectedScale);
+        scaleList.splice(index, 1);
+      
         return selectedScale;
     }
-
-    public GetScalesLeft(): number {
-        return this._scales.length;
-    }
-
 
     //TODO: will take the users input and build a list of scales of their choosing
     //so they can focus their progress (Tier 3)
