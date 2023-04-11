@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { notes } from '../helpers';
 import Piano from './Piano';
 
 import '../styles/Game.css';
+import { NoteStatus } from '../helpers';
 
 import GameModel from '../Models/GameModel';
-import { useGameService } from '../contexts/GameServiceContext';
 import { useScaleService } from '../contexts/ScaleServiceContext';
 import ScaleType from '../enums/ScaleType';
 import ScaleModel from '../Models/ScaleModel';
 import ScaleService from '../services/ScaleService';
+import NoteModel from '../Models/NoteModel';
+
 
 
 /**
@@ -25,24 +27,38 @@ const Game: React.FC = () => {
     const [currentNote, setCurrentNoteToGuess] = useState<number>(1);
     const [guesses, setGuesses] = useState<number>(3);
 
+    const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
 
-    const handleGuess = (note: string) => {
-        // console.log(note);
-        // console.log(scaleToGuess!.Notes[currentNote - 1])
-        // if (note === scaleToGuess!.Notes[currentNote - 1]) {
-        //     console.log('Correct Guess');
-        //     setCurrentNoteToGuess(currentNote + 1);
-        //     setGuesses(3);
-        // } else {
-        //     console.log('Incorrect Guess');
-        //     setGuesses(guesses - 1);
-        //     nextNote();
-        // }
+
+
+    const handleGuess = (note: NoteModel) => {
+        //move to scale service later
+
+        if (note.Name === scaleToGuess!.Notes[currentNote - 1].Name) {
+            console.log('Correct Guess');
+            setCurrentNoteToGuess(currentNote + 1);
+            setCurrentScore(currentScore + 1);
+            setGuesses(3);
+    
+            // Update the noteStatuses state
+            setNoteStatuses(prevNoteStatuses => ({
+                ...prevNoteStatuses,
+                [note.Name]: 'correct',
+            }));
+        } else {
+            console.log('Incorrect Guess');
+            setGuesses(guesses - 1);
+            if (guesses === 0) {
+                // When the user has no more guesses left, highlight the correct key orange
+                setNoteStatuses((prevNoteStatuses) => ({
+                ...prevNoteStatuses,
+                [scaleToGuess!.Notes[currentNote - 1].Name]: 'missedCorrect',
+                }));
+
+                nextNote();
+            }
+        }
     }
-
-    // const isCorrectGuess = (note: string): boolean => {
-    //     return note === scaleToGuess?.Notes[currentNote];
-    // };
 
     const nextNote = () => {
         if (currentNote + 1 < scaleToGuess!.Notes.length) {
@@ -62,6 +78,7 @@ const Game: React.FC = () => {
             <Piano 
                 notes={notes} 
                 onKeyClick={handleGuess}
+                noteStatuses={noteStatuses}
             />
         </div>
     );

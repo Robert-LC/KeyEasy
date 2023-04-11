@@ -1,15 +1,17 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { NoteType } from '../helpers';
+import NoteModel from '../Models/NoteModel';
+import { NoteStatus } from '../helpers';
 import Key from './Key';
 
 type Props = {
-    notes: NoteType[],
-    onKeyClick: (note: string) => void;
+    notes: NoteModel[];
+    noteStatuses: Record<string, NoteStatus>
+    onKeyClick: (note: NoteModel) => void;   
 }
 
-const playAudio = (note: string) => {
-    const audio = new Audio(`sounds/piano_${note}.mp3`);
+const playAudio = (note: NoteModel) => {
+    const audio = new Audio(`sounds/piano_${note.Key}.mp3`);
     audio.volume = 0.05;
     audio.play();
 };
@@ -19,8 +21,8 @@ const playAudio = (note: string) => {
  * Piano component generates all Key's in an octave (12 notes/keys)
  * @returns One octave of a working clickable piano.
  */
-const Piano: React.FC<Props> = ({ notes, onKeyClick }) => {
-    const handleKeyClick = (note: string) => {
+const Piano: React.FC<Props> = ({ notes, noteStatuses, onKeyClick }) => {
+    const handleKeyClick = (note: NoteModel) => {
         playAudio(note);
         onKeyClick(note);
     };
@@ -28,12 +30,12 @@ const Piano: React.FC<Props> = ({ notes, onKeyClick }) => {
     return (
         <Wrapper>
             <div>
-                {notes.map((element: NoteType) => (
+                {notes.map((element: NoteModel) => (
                     <Key
-                        key={element.note}
-                        note={element.note}
-                        color={element.color}
+                        key={element.Name} //not used, but required to stop React Warning
+                        note={element}
                         onKeyClick={handleKeyClick}
+                        noteStatus={noteStatuses[element.Name] || 'none'}
                     />
                 ))}
             </div>

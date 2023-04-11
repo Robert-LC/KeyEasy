@@ -1,54 +1,19 @@
-export type NoteType = {
-  [key: string]: string;
-};
+import NoteModel from "./Models/NoteModel";
 
-export const notes: NoteType[] = [
-  {
-    note: 'C',
-    color: 'white'
-  },
-  {
-    note: 'CSharp',
-    color: 'black'
-  },
-  {
-    note: 'D',
-    color: 'white'
-  },
-  {
-    note: 'DSharp',
-    color: 'black'
-  },
-  {
-    note: 'E',
-    color: 'white'
-  },
-  {
-    note: 'F',
-    color: 'white'
-  },
-  {
-    note: 'FSharp',
-    color: 'black'
-  },
-  {
-    note: 'G',
-    color: 'white'
-  },
-  {
-    note: 'GSharp',
-    color: 'black'
-  },
-  {
-    note: 'A',
-    color: 'white'
-  },
-  {
-    note: 'ASharp',
-    color: 'black'
-  },
-  {
-    note: 'B',
-    color: 'white'
-  }
+export const notes: NoteModel[] = [
+  new NoteModel('C'),
+  new NoteModel('C#'),
+  new NoteModel('D'),
+  new NoteModel('D#'),
+  new NoteModel('E'),
+  new NoteModel('F'),
+  new NoteModel('F#'),
+  new NoteModel('G'),
+  new NoteModel('G#'),
+  new NoteModel('A'),
+  new NoteModel('A#'),
+  new NoteModel('B')
 ];
+
+
+export type NoteStatus = 'correct' | 'missedCorrect' | 'none';
