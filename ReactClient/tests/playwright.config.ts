@@ -30,13 +30,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-        env: {
-          ...process.env,
-          CI: 'false', // Set CI to 'false'
-        },
-      },
+      use: { ...devices['Desktop Chrome'] },
     },
   ],
   // Run your local dev server before starting the tests.

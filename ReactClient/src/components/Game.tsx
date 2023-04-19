@@ -22,7 +22,7 @@ const Game: React.FC = () => {
     const gameModel: GameModel = new GameModel(ScaleType.Major, scaleSvc); 
    
     //State Variables
-    const [scaleToGuess, setScaleToGuess] = useState<ScaleModel>(gameModel.currentScale!); 
+    const [scaleToGuess] = useState<ScaleModel>(gameModel.currentScale!); 
     const [currentScore, setCurrentScore] = useState<number>(gameModel.currentScore);
     const [currentNote, setCurrentNoteToGuess] = useState<number>(1);
     const [guesses, setGuesses] = useState<number>(3);
