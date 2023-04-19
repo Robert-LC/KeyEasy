@@ -26,7 +26,7 @@ class GameModel {
         return this.scalesLeftToGuess.reduce((total: number, scale: ScaleModel) => total + scale.Notes.length, 0);
     }
 
-    public selectNewScale(): void {
+    public nextScale(): void {
         this.currentScale = this.scaleSvc.SelectRandomScale(this.scalesLeftToGuess);
     }
     //======================

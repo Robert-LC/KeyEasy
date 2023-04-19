@@ -20,22 +20,22 @@ const Game: React.FC = () => {
     const gameModel: GameModel = new GameModel(ScaleType.Major, scaleSvc); 
    
     //State Variables
-    const [scaleToGuess] = useState<ScaleModel>(gameModel.currentScale!); 
-    const [currentScore, setCurrentScore] = useState<number>(gameModel.currentScore);
-    const [currentNote, setCurrentNoteToGuess] = useState<number>(1);
+    const [currentScale, setCurrentScale] = useState<ScaleModel>(gameModel.currentScale!); 
+    const [score, setScore] = useState<number>(gameModel.currentScore);
+    const [currentNote, setCurrentNote] = useState<number>(1);
     const [guesses, setGuesses] = useState<number>(2);
 
     const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
 
-    const handleGuess = (note: NoteModel) => {
-        if (note.Name === scaleToGuess!.Notes[currentNote - 1].Name) {
+    const handleGuess = (note: NoteModel): void => {
+        if (isCorrect(note)) {
             // Mark the key as correct (make it green)
             setNoteStatuses(prevNoteStatuses => ({
                 ...prevNoteStatuses,
                 [note.Name]: 'correct',
             }));
 
-            setCurrentScore(currentScore + 1);
+            setScore(score + 1);
             nextNote();
         } 
         else {
@@ -45,24 +45,42 @@ const Game: React.FC = () => {
                 // mark the correct key as missed (make it orange)
                 setNoteStatuses((prevNoteStatuses) => ({
                     ...prevNoteStatuses,
-                    [scaleToGuess!.Notes[currentNote - 1].Name]: 'missedCorrect',
+                    [currentScale!.Notes[currentNote - 1].Name]: 'missedCorrect',
                 }));
 
-                setCurrentScore(currentScore - 1);
+                setScore(score - 1);
                 nextNote();
             }
         }
     }
 
     // Move to the next note in the scale
-    const nextNote = () => {
-        if (currentNote + 1 < scaleToGuess!.Notes.length) {
-            setCurrentNoteToGuess(currentNote + 1);
+    const nextNote = (): void => {
+        if (currentNote + 1 <= currentScale!.Notes.length) {
+            setCurrentNote(currentNote + 1);
             setGuesses(2);
-        } 
+        }
+        else {
+            nextScale();
+        }
     };
 
-    const numberSuffix = (num: number) => {
+    const nextScale = (): void => {
+        gameModel.nextScale();
+        setCurrentScale(gameModel.currentScale!);
+        setCurrentNote(1);
+        setGuesses(2);
+
+        // Reset the note statuses
+        var resetNoteStatuses: Record<string, NoteStatus> = {};
+        notes.forEach(note => {
+            resetNoteStatuses[note.Name] = 'none';
+        });
+
+        setNoteStatuses(resetNoteStatuses);
+    };
+
+    const numberSuffix = (num: number): string => {
         switch (num % 10) {
             case 1: return 'st';
             case 2: return 'nd';
@@ -71,13 +89,16 @@ const Game: React.FC = () => {
         }
     }
 
+    const isCorrect = (note: NoteModel): boolean => {
+        return note.Name === currentScale!.Notes[currentNote - 1].Name
+    }
 
     return( 
         <div>
             <div className='info-div'>
-                <h1 className='info-text'>Current Scale: <p className='highlight-text'>{scaleToGuess?.Name}</p></h1>
+                <h1 className='info-text'>Current Scale: <p className='highlight-text'>{currentScale?.Name}</p></h1>
                 <div>
-                    <h1 className='info-text'>Score: {currentScore}/{gameModel.maxScore}</h1>
+                    <h1 className='info-text'>Score: {score}/{gameModel.maxScore}</h1>
                     <h3 className='sub-text'>Tries Left: {guesses + 1}</h3>
                 </div>
             </div>
