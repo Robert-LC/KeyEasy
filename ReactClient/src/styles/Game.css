@@ -16,10 +16,18 @@
     display: contents;
 }
 
-.scale-text {
+.info-text {
     font-size: 40px;
     font-family: sans-serif;
     display: flex;
     justify-content: flex-start;
+    color: white;
+}
+
+.sub-text {
+    font-size: 30px;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: flex-end;
     color: white;
 }
