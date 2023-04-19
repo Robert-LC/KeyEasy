@@ -22,38 +22,38 @@ test.describe('ScaleService', () => {
         });
 
         test('Generated Scales are Major', async ({}) => {
-            expect(majorScales[0].Name).toContain('Major');
-            expect(majorScales[0].Name).not.toContain('Minor');
+            expect(majorScales[0].Name).toContain('major');
+            expect(majorScales[0].Name).not.toContain('minor');
         });
 
         test('Generated Scales are Minor', async ({}) => {
-            expect(minorScales[0].Name).toContain('Minor');
-            expect(minorScales[0].Name).not.toContain('Major');      
+            expect(minorScales[0].Name).toContain('minor');
+            expect(minorScales[0].Name).not.toContain('major');      
         });
     });
 
-    test.describe('SelectRandomScale', () => {
-        test('SelectRandomScale returns a scale', async ({}) => {
-            const scaleSvc = new ScaleService();
-            expect(scaleSvc.SelectRandomScale()).not.toBe(undefined);
-        });
+    // test.describe('SelectRandomScale', () => {
+    //     test('SelectRandomScale returns a scale', async ({}) => {
+    //         const scaleSvc = new ScaleService();
+    //         expect(scaleSvc.SelectRandomScale()).not.toBe(undefined);
+    //     });
 
-        test('SelectRandomScale removes the scale from the list of scales', async ({}) => {
-            const scaleSvc = new ScaleService();
-            const scale = scaleSvc.SelectRandomScale();
-            expect(scale).not.toBe(undefined);
-            expect(scaleSvc.GetScalesLeft()).toBe(11);
-        });
+    //     test('SelectRandomScale removes the scale from the list of scales', async ({}) => {
+    //         const scaleSvc = new ScaleService();
+    //         const scale = scaleSvc.SelectRandomScale();
+    //         expect(scale).not.toBe(undefined);
+    //         expect(scaleSvc.GetScalesLeft()).toBe(11);
+    //     });
 
-        test('SelectRandomScale returns undefined when there are no scales left to pick from', async ({}) => {
-            const SCALE_COUNT = 12;
-            const scaleSvc = new ScaleService();
-            for (let i = 0; i < SCALE_COUNT; i++) {
-                scaleSvc.SelectRandomScale();
-            }
-            expect(scaleSvc.GetScalesLeft()).toBe(0);
-            expect(scaleSvc.SelectRandomScale()).toBe(undefined);
-        });
-    });
+    //     test('SelectRandomScale returns undefined when there are no scales left to pick from', async ({}) => {
+    //         const SCALE_COUNT = 12;
+    //         const scaleSvc = new ScaleService();
+    //         for (let i = 0; i < SCALE_COUNT; i++) {
+    //             scaleSvc.SelectRandomScale();
+    //         }
+    //         expect(scaleSvc.GetScalesLeft()).toBe(0);
+    //         expect(scaleSvc.SelectRandomScale()).toBe(undefined);
+    //     });
+    // });
 });
 

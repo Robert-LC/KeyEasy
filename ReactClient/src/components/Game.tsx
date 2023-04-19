@@ -32,7 +32,7 @@ const Game: React.FC = () => {
 
 
     const handleGuess = (note: NoteModel) => {
-        //move to scale service later
+        //TODO: Break most logic off into GameService.
 
         if (note.Name === scaleToGuess!.Notes[currentNote - 1].Name) {
             console.log('Correct Guess');

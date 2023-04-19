@@ -50,15 +50,7 @@ class ScaleService {
       
         return selectedScale;
     }
-
-    //TODO: will take the users input and build a list of scales of their choosing
-    //so they can focus their progress (Tier 3)
-    public CreateCustomScaleList() {
-
-    }
-
 }
-
 
 const notes: string[] = [
     "C","C#",
@@ -70,5 +62,4 @@ const notes: string[] = [
     "B"
 ];
   
-
 export default ScaleService;
