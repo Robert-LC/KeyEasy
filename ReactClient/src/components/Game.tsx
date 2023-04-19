@@ -23,54 +23,66 @@ const Game: React.FC = () => {
     const [scaleToGuess] = useState<ScaleModel>(gameModel.currentScale!); 
     const [currentScore, setCurrentScore] = useState<number>(gameModel.currentScore);
     const [currentNote, setCurrentNoteToGuess] = useState<number>(1);
-    const [guesses, setGuesses] = useState<number>(3);
+    const [guesses, setGuesses] = useState<number>(2);
 
     const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
 
     const handleGuess = (note: NoteModel) => {
-        //TODO: Break most logic off into GameService.
-
         if (note.Name === scaleToGuess!.Notes[currentNote - 1].Name) {
-            console.log('Correct Guess');
-            setCurrentNoteToGuess(currentNote + 1);
-            setCurrentScore(currentScore + 1);
-            setGuesses(3);
-    
-            // Update the noteStatuses state
+            // Mark the key as correct (make it green)
             setNoteStatuses(prevNoteStatuses => ({
                 ...prevNoteStatuses,
                 [note.Name]: 'correct',
             }));
-        } else {
-            console.log('Incorrect Guess');
+
+            setCurrentScore(currentScore + 1);
+            nextNote();
+        } 
+        else {
             setGuesses(guesses - 1);
+
             if (guesses === 0) {
-                // When the user has no more guesses left, highlight the correct key orange
+                // mark the correct key as missed (make it orange)
                 setNoteStatuses((prevNoteStatuses) => ({
-                ...prevNoteStatuses,
-                [scaleToGuess!.Notes[currentNote - 1].Name]: 'missedCorrect',
+                    ...prevNoteStatuses,
+                    [scaleToGuess!.Notes[currentNote - 1].Name]: 'missedCorrect',
                 }));
 
+                setCurrentScore(currentScore - 1);
                 nextNote();
             }
         }
     }
 
+    // Move to the next note in the scale
     const nextNote = () => {
         if (currentNote + 1 < scaleToGuess!.Notes.length) {
             setCurrentNoteToGuess(currentNote + 1);
-            setGuesses(3);
+            setGuesses(2);
         } 
     };
+
+    const numberSuffix = (num: number) => {
+        switch (num % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    }
+
 
     return( 
         <div>
             <div className='info-div'>
-                <h1 className='scale-text'>Current Scale: <p className='highlight-text'>{scaleToGuess?.Name}</p></h1>
-                <h1 className='scale-text'>Score: {currentScore}/{gameModel.maxScore}</h1>
+                <h1 className='info-text'>Current Scale: <p className='highlight-text'>{scaleToGuess?.Name}</p></h1>
+                <div>
+                    <h1 className='info-text'>Score: {currentScore}/{gameModel.maxScore}</h1>
+                    <h3 className='sub-text'>Tries Left: {guesses + 1}</h3>
+                </div>
             </div>
             
-            <h1 className='note-prompt'>Click the <p className='highlight-text'>{currentNote}</p> Note</h1>
+            <h1 className='note-prompt'>Click the <p className='highlight-text'>{currentNote}{numberSuffix(currentNote)}</p> Note</h1>
             <Piano 
                 notes={notes} 
                 onKeyClick={handleGuess}
