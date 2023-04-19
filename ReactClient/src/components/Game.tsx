@@ -94,7 +94,7 @@ const Game: React.FC = () => {
     }
 
     return( 
-        <div>
+        <div className='game'>
             <div className='info-div'>
                 <h1 className='info-text'>Current Scale: <p className='highlight-text'>{currentScale?.Name}</p></h1>
                 <div>
