@@ -12,8 +12,6 @@ import ScaleModel from '../Models/ScaleModel';
 import ScaleService from '../services/ScaleService';
 import NoteModel from '../Models/NoteModel';
 
-
-
 /**
  * Game displays the piano and accompanying information to the user
  */
@@ -28,8 +26,6 @@ const Game: React.FC = () => {
     const [guesses, setGuesses] = useState<number>(3);
 
     const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
-
-
 
     const handleGuess = (note: NoteModel) => {
         //TODO: Break most logic off into GameService.
