@@ -109,6 +109,9 @@ const Game: React.FC = () => {
                 onKeyClick={handleGuess}
                 noteStatuses={noteStatuses}
             />
+
+
+            <h1 className='demo-disclaimer'><em>Demo Mode only offers C and C# Major for Practice</em></h1>
         </div>
     );
 }
