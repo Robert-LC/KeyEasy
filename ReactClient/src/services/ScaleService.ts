@@ -1,4 +1,4 @@
-import { Scale } from "tonal";
+import { Note, Scale } from "tonal";
 import ScaleType from "../enums/ScaleType";
 import { sample } from 'lodash';
 import ScaleModel from "../Models/ScaleModel";
@@ -23,7 +23,8 @@ class ScaleService {
             var scale = Scale.get(`${note} ${scaleType.toString()}`);
             
             // Create NoteModel instances for each note in scale.notes
-            const noteModels: NoteModel[] = scale.notes.map((noteName: string) => new NoteModel(noteName));
+            const noteModels: NoteModel[] = scale.notes.map((noteName: string) => new NoteModel(Note.simplify(noteName)));
+            console.log(noteModels);
             
             // Use data to create ScaleModels
             const model = new ScaleModel(scale.name, noteModels);
@@ -53,13 +54,14 @@ class ScaleService {
 }
 
 const notes: string[] = [
-    "C","C#",
-    "D","D#",
-    "E",
-    "F","F#",
-    "G","G#",
-    "A","A#",
-    "B"
+    // "C","C#",
+    // "D","D#",
+    // "E",
+    // "F","F#",
+    // "G","G#",
+    // "A","A#",
+    // "B"
+    "C","C#"
 ];
   
 export default ScaleService;
