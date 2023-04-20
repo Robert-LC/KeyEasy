@@ -42,7 +42,7 @@ const Game: React.FC = () => {
         } 
         else {
             setGuesses(guesses - 1);
-
+            
             if (guesses === 0) {
                 // mark the correct key as missed (make it orange)
                 setNoteStatuses((prevNoteStatuses) => ({
