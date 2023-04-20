@@ -8,6 +8,7 @@ type Props = {
     notes: NoteModel[];
     noteStatuses: Record<string, NoteStatus>
     onKeyClick: (note: NoteModel) => void;   
+    showNoteNames: boolean;
 }
 
 const playAudio = (note: NoteModel) => {
@@ -21,7 +22,7 @@ const playAudio = (note: NoteModel) => {
  * Piano component generates all Key's in an octave (12 notes/keys)
  * @returns One octave of a working clickable piano.
  */
-const Piano: React.FC<Props> = ({ notes, noteStatuses, onKeyClick }) => {
+const Piano: React.FC<Props> = ({ notes, noteStatuses, onKeyClick, showNoteNames }) => {
     const handleKeyClick = (note: NoteModel) => {
         playAudio(note);
         onKeyClick(note);
@@ -36,6 +37,7 @@ const Piano: React.FC<Props> = ({ notes, noteStatuses, onKeyClick }) => {
                         note={element}
                         onKeyClick={handleKeyClick}
                         noteStatus={noteStatuses[element.Name] || 'none'}
+                        showNoteNames={showNoteNames}
                     />
                 ))}
             </div>
@@ -48,5 +50,6 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 5px;
 `
 export default Piano;

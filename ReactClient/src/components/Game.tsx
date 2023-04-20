@@ -22,10 +22,12 @@ const Game: React.FC = () => {
     //State Variables
     const [currentScale, setCurrentScale] = useState<ScaleModel>(gameModel.currentScale!); 
     const [score, setScore] = useState<number>(gameModel.currentScore);
+
     const [currentNote, setCurrentNote] = useState<number>(1);
+    const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
     const [guesses, setGuesses] = useState<number>(2);
 
-    const [noteStatuses, setNoteStatuses] = useState<Record<string, NoteStatus>>({});
+    const [showNoteNames, setShowNoteNames] = useState<boolean>(false);
 
     const handleGuess = (note: NoteModel): void => {
         if (isCorrect(note)) {
@@ -93,10 +95,21 @@ const Game: React.FC = () => {
         return note.Name === currentScale!.Notes[currentNote - 1].Name
     }
 
+    const handleToggleNoteNames = () => {
+        setShowNoteNames(!showNoteNames);
+    };
+
     return( 
-        <div className='game'>
-            <div className='info-div'>
-                <h1 className='info-text'>Current Scale: <p className='highlight-text'>{currentScale?.Name}</p></h1>
+        <div>
+            <div className='info-container'>
+                <div className='push-left'>
+                    <h1 className='info-text'>Current Scale: <p className='highlight-text'>{currentScale?.Name}</p></h1>
+                    <div className="note-names-toggle">
+                        <label htmlFor="noteNamesToggle" className='sub-text bold'>Show Note Names</label>
+                        <input type="checkbox" id="noteNamesToggle" checked={showNoteNames} onChange={handleToggleNoteNames}/>
+                    </div>
+                </div>    
+
                 <div>
                     <h1 className='info-text'>Score: {score}/{gameModel.maxScore}</h1>
                     <h3 className='sub-text'>Tries Left: {guesses + 1}</h3>
@@ -108,6 +121,7 @@ const Game: React.FC = () => {
                 notes={notes} 
                 onKeyClick={handleGuess}
                 noteStatuses={noteStatuses}
+                showNoteNames={showNoteNames}
             />
 
 

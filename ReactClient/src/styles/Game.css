@@ -1,10 +1,23 @@
 
-.info-div {
+.info-container {
     display: flex;
     justify-content: space-around;
     background-color: #16252e;
     border-bottom: #1e313d 7px solid;
     ;
+}
+
+.note-names-toggle {
+    display: inline-flex;
+}
+
+.sub-text.bold {
+    font-weight: bold;
+}
+
+#noteNamesToggle {
+    width:30px;
+    height:30px;
 }
 
 .note-prompt {
@@ -42,4 +55,5 @@
     display: flex;
     justify-content: center;
     color: rgb(213, 213, 213);
+    padding: 10px;
 }

@@ -24,7 +24,6 @@ class ScaleService {
             
             // Create NoteModel instances for each note in scale.notes
             const noteModels: NoteModel[] = scale.notes.map((noteName: string) => new NoteModel(Note.simplify(noteName)));
-            console.log(noteModels);
             
             // Use data to create ScaleModels
             const model = new ScaleModel(scale.name, noteModels);
