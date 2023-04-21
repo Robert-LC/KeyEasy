@@ -57,3 +57,34 @@
     color: rgb(213, 213, 213);
     padding: 10px;
 }
+
+.game-over-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+    width: 100vw;  
+}
+
+#game-over-message {
+    font-size: 60px;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin: 20px;
+}
+
+#restart-game-btn {
+    width: 30%;
+    font-size: 25px;
+    height: 15%;
+    font-weight: bold;
+}
+
+#final-score {
+    margin: 0px;
+    margin-bottom: 15px;;
+    font-size: 30px;
+}

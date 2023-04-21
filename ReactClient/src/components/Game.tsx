@@ -17,10 +17,10 @@ import NoteModel from '../Models/NoteModel';
  */
 const Game: React.FC = () => {
     const scaleSvc: ScaleService = useScaleService();
-    const gameModel: GameModel = new GameModel(ScaleType.Major, scaleSvc); 
-   
+    const gameModel: GameModel = new GameModel(ScaleType.Major, scaleSvc);
+
     //State Variables
-    const [currentScale, setCurrentScale] = useState<ScaleModel>(gameModel.currentScale!); 
+    const [currentScale, setCurrentScale] = useState<ScaleModel>(gameModel.currentScale!);
     const [score, setScore] = useState<number>(gameModel.currentScore);
 
     const [currentNote, setCurrentNote] = useState<number>(1);
@@ -28,6 +28,11 @@ const Game: React.FC = () => {
     const [guesses, setGuesses] = useState<number>(2);
 
     const [showNoteNames, setShowNoteNames] = useState<boolean>(false);
+    const [isGameOver, setIsGameOver] = useState<boolean>(false);
+
+    const [scalesLeftToGuess, setScalesLeftToGuess] = useState<ScaleModel[]>(gameModel.scalesLeftToGuess);
+
+
 
     const handleGuess = (note: NoteModel): void => {
         if (isCorrect(note)) {
@@ -37,12 +42,12 @@ const Game: React.FC = () => {
                 [note.Name]: 'correct',
             }));
 
-            setScore(score + 1);
+            setScore(prevScore => prevScore + 1);
             nextNote();
-        } 
+        }
         else {
             setGuesses(guesses - 1);
-            
+
             if (guesses === 0) {
                 // mark the correct key as missed (make it orange)
                 setNoteStatuses((prevNoteStatuses) => ({
@@ -50,7 +55,7 @@ const Game: React.FC = () => {
                     [currentScale!.Notes[currentNote - 1].Name]: 'missedCorrect',
                 }));
 
-                setScore(score - 1);
+                setScore(prevScore => prevScore - 1);
                 nextNote();
             }
         }
@@ -68,18 +73,26 @@ const Game: React.FC = () => {
     };
 
     const nextScale = (): void => {
-        gameModel.nextScale();
-        setCurrentScale(gameModel.currentScale!);
-        setCurrentNote(1);
-        setGuesses(2);
+        if (scalesLeftToGuess.length > 0) {
+            const updatedScalesLeftToGuess = [...scalesLeftToGuess];
+            const newScale = scaleSvc.SelectRandomScale(updatedScalesLeftToGuess);
 
-        // Reset the note statuses
-        var resetNoteStatuses: Record<string, NoteStatus> = {};
-        notes.forEach(note => {
-            resetNoteStatuses[note.Name] = 'none';
-        });
+            setCurrentScale(newScale!);
+            setCurrentNote(1);
+            setGuesses(2);
+            setScalesLeftToGuess(updatedScalesLeftToGuess);
 
-        setNoteStatuses(resetNoteStatuses);
+            // Reset the note statuses
+            var resetNoteStatuses: Record<string, NoteStatus> = {};
+            notes.forEach(note => {
+                resetNoteStatuses[note.Name] = 'none';
+            });
+
+            setNoteStatuses(resetNoteStatuses);
+        }
+        else {
+            setIsGameOver(true);
+        }
     };
 
     const numberSuffix = (num: number): string => {
@@ -99,35 +112,77 @@ const Game: React.FC = () => {
         setShowNoteNames(!showNoteNames);
     };
 
-    return( 
+    const restartGame = (): void => {
+        // Reset game model
+        gameModel.reset();
+
+        // Reset state variables
+        setScalesLeftToGuess(gameModel.scalesLeftToGuess);
+        setCurrentScale(gameModel.currentScale!);
+        setScore(gameModel.currentScore);
+        setCurrentNote(1);
+        setNoteStatuses({});
+        setGuesses(2);
+        setIsGameOver(false);
+    };
+
+    return (
         <div>
-            <div className='info-container'>
-                <div className='push-left'>
-                    <h1 className='info-text'>Current Scale: <p className='highlight-text'>{currentScale?.Name}</p></h1>
-                    <div className="note-names-toggle">
-                        <label htmlFor="noteNamesToggle" className='sub-text bold'>Show Note Names</label>
-                        <input type="checkbox" id="noteNamesToggle" checked={showNoteNames} onChange={handleToggleNoteNames}/>
+            {!isGameOver ? (
+                <>
+                    <div className="info-container">
+                        <div className="push-left">
+                            <h1 className="info-text">
+                                Current Scale: <p className="highlight-text">{currentScale?.Name}</p>
+                            </h1>
+                            <div className="note-names-toggle">
+                                <label htmlFor="noteNamesToggle" className="sub-text bold">
+                                    Show Note Names
+                                </label>
+                                <input
+                                    type="checkbox"
+                                    id="noteNamesToggle"
+                                    checked={showNoteNames}
+                                    onChange={handleToggleNoteNames}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <h1 className="info-text">
+                                Score: {score}/{gameModel.maxScore}
+                            </h1>
+                            <h3 className="sub-text">Tries Left: {guesses + 1}</h3>
+                        </div>
                     </div>
-                </div>    
 
-                <div>
-                    <h1 className='info-text'>Score: {score}/{gameModel.maxScore}</h1>
-                    <h3 className='sub-text'>Tries Left: {guesses + 1}</h3>
+                    <h1 className="note-prompt">
+                        Click the <p className="highlight-text">{currentNote}{numberSuffix(currentNote)}</p> Note
+                    </h1>
+
+                    <Piano
+                        notes={notes}
+                        onKeyClick={handleGuess}
+                        noteStatuses={noteStatuses}
+                        showNoteNames={showNoteNames}
+                    />
+
+                    <h1 className="demo-disclaimer">
+                        <em>Demo Mode only offers C and C# Major for Practice</em>
+                    </h1>
+                </>
+            ) : (
+                <div className="game-over-container">
+                    <h1 id="game-over-message">Game Over!</h1>
+                    <h1 className="info-text" id="final-score">
+                        Final Score: <p className="highlight-text">{score}/{gameModel.maxScore}</p>
+                    </h1>
+                    <button id="restart-game-btn" onClick={restartGame}>Restart Game</button>
                 </div>
-            </div>
-            
-            <h1 className='note-prompt'>Click the <p className='highlight-text'>{currentNote}{numberSuffix(currentNote)}</p> Note</h1>
-            <Piano 
-                notes={notes} 
-                onKeyClick={handleGuess}
-                noteStatuses={noteStatuses}
-                showNoteNames={showNoteNames}
-            />
-
-
-            <h1 className='demo-disclaimer'><em>Demo Mode only offers C and C# Major for Practice</em></h1>
+            )}
         </div>
     );
+
 }
 
 export default Game;
