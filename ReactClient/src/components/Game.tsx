@@ -21,6 +21,7 @@ const Game: React.FC = () => {
 
     //State Variables
     const [currentScale, setCurrentScale] = useState<ScaleModel>(gameModel.currentScale!);
+
     const [score, setScore] = useState<number>(gameModel.currentScore);
 
     const [currentNote, setCurrentNote] = useState<number>(1);
@@ -31,6 +32,7 @@ const Game: React.FC = () => {
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
     const [scalesLeftToGuess, setScalesLeftToGuess] = useState<ScaleModel[]>(gameModel.scalesLeftToGuess);
+
 
 
 
@@ -56,6 +58,7 @@ const Game: React.FC = () => {
                 }));
 
                 setScore(prevScore => prevScore - 1);
+
                 nextNote();
             }
         }
@@ -180,6 +183,7 @@ const Game: React.FC = () => {
                     <button id="restart-game-btn" onClick={restartGame}>Restart Game</button>
                 </div>
             )}
+
         </div>
     );
 
